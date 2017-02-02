@@ -18,19 +18,17 @@ class Backup:
         parser.add_argument('--version', action='version', version=parser.description + ' ' + __version__)
         arguments = parser.parse_args()
 
-        self.configuration = yaml.load(arguments.conf_file.read(), yaml.RoundTripLoader)
+        configuration = yaml.load(arguments.conf_file.read(), yaml.RoundTripLoader)
         self.logging_handler_console_level_default -= arguments.verbosity * 10
-        self.configuration['logging']['handlers']['console']['level'] = self.logging_handler_console_level_default
-        logging.config.dictConfig(self.configuration['logging'])
+        configuration['logging']['handlers']['console']['level'] = self.logging_handler_console_level_default
+        logging.config.dictConfig(configuration['logging'])
         logger = logging.getLogger('backup')
-
         print(parser.description)
         logger.debug(arguments)
-        logger.debug(self.configuration['backup'])
 
         methods = {
             'rsync': RSync,
             'tar': Tar
         }
-        backup = methods[self.configuration['backup']['type']]()
-        backup.execute()
+        backup = methods[configuration['backup']['type']]
+        backup(configuration).execute()
