@@ -1,3 +1,4 @@
 # Python v3
 coverage~=4.3.4
+fasteners~=0.14.1
 ruamel.yaml~=0.13.11

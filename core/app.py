@@ -3,6 +3,7 @@ import logging
 import logging.config
 import argparse
 from ruamel import yaml
+from backup import RSync, Tar
 
 __version__ = 'v2.0.0'
 
@@ -26,3 +27,10 @@ class Backup:
         print(parser.description)
         logger.debug(arguments)
         logger.debug(self.configuration['backup'])
+
+        methods = {
+            'rsync': RSync,
+            'tar': Tar
+        }
+        backup = methods[self.configuration['backup']['type']]()
+        backup.execute()
