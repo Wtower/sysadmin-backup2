@@ -57,7 +57,8 @@ backup:
   # Which directories to include.
   # Separate with comma (tar only).
   #
-  directories: .
+  directories:
+    - /etc
 
   # Excludes
   # Which files or directories to exclude.

@@ -2,14 +2,17 @@ backup:
   name: Sample configuration for external backup
   type: tar
   incremental: True
-  directories: .
-  mysqldump: True
-  postgresdump: True
+  directories:
+    - /etc
+    - /var/log
+    - /media/files
 
 destination:
-  destination: /tmp/spufd2
+  destination: /media/backup-external
   type: usb
   device: /dev/sdf
+  encrypted_key: /root/backup-external-key
+  encrypted_map: backup-external
 
 logging:
   version: 1

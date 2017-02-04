@@ -1,11 +1,12 @@
 backup:
   name: Sample configuration for local backup
-  type: tar
+  type: rsync
   incremental: True
-  directories: .
+  directories:
+    - /media/files
 
 destination:
-  destination: /tmp/spufd2
+  destination: /media/backup
   type: local
 
 logging:
