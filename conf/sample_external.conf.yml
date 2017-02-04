@@ -1,0 +1,28 @@
+backup:
+  name: Sample configuration for external backup
+  type: tar
+  incremental: True
+  directories: .
+
+destination:
+  destination: /tmp/spufd2
+  type: usb
+  device: /dev/sdf
+
+logging:
+  version: 1
+  disable_existing_loggers: False
+  formatters:
+    simple:
+      format: '%(levelname)s %(message)s'
+    verbose:
+      format: '%(asctime)s %(process)d %(name)s %(levelname)s %(message)s'
+  handlers:
+    console:
+      class: logging.StreamHandler
+      formatter: simple
+  loggers:
+    backup:
+      level: DEBUG
+      handlers:
+        - console

@@ -2,3 +2,4 @@
 coverage~=4.3.4
 fasteners~=0.14.1
 ruamel.yaml~=0.13.11
+sh~=1.12.9
