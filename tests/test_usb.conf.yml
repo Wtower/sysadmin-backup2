@@ -1,13 +1,16 @@
 backup:
-  name: "Test configuration: tar local"
+  name: "Test configuration: tar usb"
   type: tar
   # incremental: True
   directories:
     - .
+  mysqldump: True
+  postgresdump: True
 
 destination:
   destination: /tmp/spufd2
-  type: local
+  type: usb
+  device: /dev/sdf
 
 logging:
   version: 1
