@@ -16,12 +16,12 @@ class Mount:
             sh.mount(self.configuration['device'], self.configuration['destination'])
         except sh.ErrorReturnCode_32:
             self.logger.debug("Device already mounted")
-        finally:
+        else:
             self.logger.debug("Mounted device")
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        if exc_type is not None:
+        if exc_type is not None:  # pragma: nocover
             self.logger.error('Mount exception %s: %s' % exc_type, exc_val)
             return False
         if self.configuration['type'] != 'usb':
