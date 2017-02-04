@@ -7,15 +7,17 @@ from core.app import Backup
 
 
 class UsbBackupTestCase(unittest.TestCase):
+    conf_file = 'tests/test_usb.conf.yml'
+
     @patch('backup.backup.sh')
     @patch('core.mount.sh')
     def test_backup_external(self, mock_sh, mock_sh_backup):
-        sys.argv = [sys.argv[0], '-vvvv', 'tests/test_usb.conf.yml']
+        sys.argv = [sys.argv[0], '-vvvv', self.conf_file]
         Backup()
         self.assertIn(call.mount('/dev/sdf', '/tmp/spufd2'), mock_sh.method_calls)
         self.assertIn(call.umount('-l', '/dev/sdf'), mock_sh.method_calls)
         stderr = sys.stderr.getvalue()
-        # self.assertIn('conf/sample_external.conf.yml', stderr)
+        self.assertIn(self.conf_file, stderr)
         self.assertIn("DEBUG Mounted device", stderr)
         # self.assertIn("DEBUG Performed mysql dump", stderr)
         self.assertIn("DEBUG Unmounted device", stderr)
@@ -37,10 +39,9 @@ class UsbBackupTestCase(unittest.TestCase):
 
     @patch('core.mount.sh', new=mock_sh_mounted)
     def test_backup_external_mounted(self):
-        sys.argv = [sys.argv[0], '-vvvv', 'tests/test_usb.conf.yml']
+        sys.argv = [sys.argv[0], '-vvvv', self.conf_file]
         Backup()
         stderr = sys.stderr.getvalue()
-        # self.assertIn('conf/sample_external.conf.yml', stderr)
         self.assertIn("DEBUG Device already mounted", stderr)
         self.assertIn("DEBUG Unmounted device", stderr)
 

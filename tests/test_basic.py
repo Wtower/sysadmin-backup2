@@ -6,11 +6,13 @@ from core.app import Backup
 
 
 class BasicBackupTestCase(unittest.TestCase):
+    conf_file = 'tests/test_basic.conf.yml'
+
     def test_backup_local(self):
-        sys.argv = [sys.argv[0], '-vvvv', 'tests/test_basic.conf.yml']
+        sys.argv = [sys.argv[0], '-vvvv', self.conf_file]
         Backup()
         stderr = sys.stderr.getvalue()
-        # self.assertIn('conf/sample_local.conf.yml', stderr)
+        self.assertIn(self.conf_file, stderr)
         self.assertNotIn("DEBUG Mounted device", stderr)
 
     def tearDown(self):
