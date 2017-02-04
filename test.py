@@ -1,5 +1,8 @@
 import unittest
-from tests.tests import BackupTestCase
+from tests.test_basic import BasicBackupTestCase
+from tests.test_basic_db import BasicDBBackupTestCase
+from tests.test_usb import UsbBackupTestCase
+from tests.test_usb_enc import UsbEncBackupTestCase
 
 
 if __name__ == '__main__':

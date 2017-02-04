@@ -9,5 +9,8 @@ class Tar(BackupMethod):
     def execute(self):
         logger = logging.getLogger('backup.tar')
         with self.mount:
-            print('exec')
-        logger.debug('Elapsed time: %.3f sec' % self.stat())
+            print("Performing backup")
+            super(Tar, self).execute()
+            # todo backup tar
+        print("Backup finished")
+        logger.debug("Elapsed time: %.3f sec", self.stat())

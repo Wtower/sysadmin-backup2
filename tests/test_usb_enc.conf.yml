@@ -1,14 +1,11 @@
 backup:
-  name: Sample configuration for external backup
+  name: "Test configuration: tar usb"
   type: tar
-  incremental: True
   directories:
-    - /etc
-    - /var/log
-    - /media/files
+    - .
 
 destination:
-  destination: /media/backup-external
+  destination: /tmp/spufd2
   type: usb
   device: /dev/sdf
   encrypted_key: /root/backup-external-key
@@ -20,8 +17,6 @@ logging:
   formatters:
     simple:
       format: '%(levelname)s %(message)s'
-    verbose:
-      format: '%(asctime)s %(process)d %(name)s %(levelname)s %(message)s'
   handlers:
     console:
       class: logging.StreamHandler

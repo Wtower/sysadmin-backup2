@@ -3,6 +3,12 @@ sysadmin-backup
 
 Console backup application. Intended mainly for server administration.
 
+.. image:: https://img.shields.io/travis/Wtower/sysadmin-backup2/master.svg
+  :target: https://travis-ci.org/Wtower/sysadmin-backup2
+
+.. image:: https://img.shields.io/coveralls/Wtower/sysadmin-backup2/master.svg
+  :target: https://coveralls.io/github/Wtower/sysadmin-backup2
+
 Features
 --------
 
@@ -11,6 +17,7 @@ Features
 - Backup methods: tar and rsync
 - Lock process so backup can execute after an existing backup finishes
 - Auto-mount external device and open for encryption if encrypted
+- Mysql and postgres dump
 
 .. _Configuration: https://github.com/Wtower/sysadmin-backup2/blob/master/conf/sample.conf.yaml
 .. _logging: https://docs.python.org/3/library/logging.config.html#dictionary-schema-details

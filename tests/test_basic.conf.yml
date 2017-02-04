@@ -1,12 +1,12 @@
 backup:
-  name: Sample configuration for local backup
-  type: rsync
-  incremental: True
+  name: "Test configuration: tar local"
+  type: tar
+  # incremental: True
   directories:
-    - /media/files
+    - .
 
 destination:
-  destination: /media/backup
+  destination: /tmp/spufd2
   type: local
 
 logging:
@@ -15,8 +15,6 @@ logging:
   formatters:
     simple:
       format: '%(levelname)s %(message)s'
-    verbose:
-      format: '%(asctime)s %(process)d %(name)s %(levelname)s %(message)s'
   handlers:
     console:
       class: logging.StreamHandler

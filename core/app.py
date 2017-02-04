@@ -14,6 +14,7 @@ class Backup:
     def __init__(self):
         parser = argparse.ArgumentParser(description='sysadmin-backup')
         parser.add_argument('conf_file', type=open, help="Configuration file")
+        parser.add_argument('-n', '--dry-run', action='store_true', help="Simulate backup")
         parser.add_argument('-v', action='count', default=0, dest='verbosity', help="Verbosity level")
         parser.add_argument('--version', action='version', version=parser.description + ' ' + __version__)
         arguments = parser.parse_args()
@@ -31,4 +32,4 @@ class Backup:
             'tar': Tar
         }
         backup = methods[configuration['backup']['type']]
-        backup(configuration).execute()
+        backup(configuration, arguments).execute()

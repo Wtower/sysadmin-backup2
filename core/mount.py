@@ -22,7 +22,7 @@ class Mount:
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         if exc_type is not None:  # pragma: nocover
-            self.logger.error('Mount exception %s: %s' % exc_type, exc_val)
+            self.logger.error("Unhandled exception %s: %s", exc_type, exc_val)
             return False
         self.unmount()
         self.crypt_close()
