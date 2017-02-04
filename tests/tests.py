@@ -2,6 +2,8 @@
 import unittest
 from unittest.mock import Mock, patch, call
 import sys
+import os
+import shutil
 from core.app import Backup
 
 
@@ -41,6 +43,8 @@ class BackupTestCase(unittest.TestCase):
     @patch('core.mount.sh')
     def test_backup_external_encrypted(self, mock_sh):
         sys.argv = [sys.argv[0], '-vvvv', 'conf/sample_external_enc.conf.yml']
+        # Let this test create destination to increase branch coverage
+        os.makedirs('/tmp/spufd2')
         Backup()
         self.assertIn(
             call.cryptsetup('luksOpen', '-d', '/root/backup-external-key', '/dev/sdf', 'backup-external'),
@@ -59,3 +63,6 @@ class BackupTestCase(unittest.TestCase):
         stderr = sys.stderr.getvalue()
         self.assertIn('conf/sample_local.conf.yml', stderr)
         self.assertNotIn('DEBUG Mounted device', stderr)
+
+    def tearDown(self):
+        shutil.rmtree('/tmp/spufd2')

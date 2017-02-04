@@ -9,8 +9,8 @@ Features
 - Configuration_ is YAML based
 - Full logging_ capabilities with multiple handlers_ available
 - Backup methods: tar and rsync
-- Process lock so backup can execute after an existing backup finishes
-- Auto-mount external device
+- Lock process so backup can execute after an existing backup finishes
+- Auto-mount external device and open for encryption if encrypted
 
 .. _Configuration: https://github.com/Wtower/sysadmin-backup2/blob/master/conf/sample.conf.yaml
 .. _logging: https://docs.python.org/3/library/logging.config.html#dictionary-schema-details
@@ -33,6 +33,8 @@ Usage
       -v          Verbosity level
       --version   show program's version number and exit
 
+
+For the configuration parameters see ``conf/sample.conf.yml``.
 
 Version note
 ------------

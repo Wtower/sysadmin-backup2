@@ -1,5 +1,6 @@
 """ Mount filesystem """
 import logging
+import os
 import sh
 
 
@@ -12,6 +13,7 @@ class Mount:
         self.is_mounted = False
 
     def __enter__(self):
+        self.check_destination()
         if self.configuration['type'] != 'usb':
             return self
         self.crypt_open()
@@ -25,6 +27,11 @@ class Mount:
         self.unmount()
         self.crypt_close()
         return self
+
+    def check_destination(self):
+        if not os.path.exists(self.configuration['destination']):
+            os.makedirs(self.configuration['destination'])
+            self.logger.debug("Created destination directory")
 
     def mount(self):
         try:
