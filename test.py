@@ -1,5 +1,5 @@
 import unittest
-from tests.tests import BackupTestCase
+from tests.test_basic import BackupTestCase
 
 
 if __name__ == '__main__':

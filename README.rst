@@ -11,6 +11,7 @@ Features
 - Backup methods: tar and rsync
 - Lock process so backup can execute after an existing backup finishes
 - Auto-mount external device and open for encryption if encrypted
+- Mysql and postgres dump
 
 .. _Configuration: https://github.com/Wtower/sysadmin-backup2/blob/master/conf/sample.conf.yaml
 .. _logging: https://docs.python.org/3/library/logging.config.html#dictionary-schema-details
