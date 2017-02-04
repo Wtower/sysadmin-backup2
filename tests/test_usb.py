@@ -1,7 +1,8 @@
-""" Unit tests """
+""" Test tar usb """
 import unittest
 from unittest.mock import Mock, patch, call
 import sys
+import os
 import shutil
 from core.app import Backup
 
@@ -9,23 +10,18 @@ from core.app import Backup
 class UsbBackupTestCase(unittest.TestCase):
     conf_file = 'tests/test_usb.conf.yml'
 
-    @patch('backup.backup.sh')
     @patch('core.mount.sh')
-    def test_backup_external(self, mock_sh, mock_sh_backup):
+    def test_backup_external(self, mock_sh):
         sys.argv = [sys.argv[0], '-vvvv', self.conf_file]
+        # Let this test create destination to increase branch coverage
+        os.makedirs('/tmp/spufd2')
         Backup()
         self.assertIn(call.mount('/dev/sdf', '/tmp/spufd2'), mock_sh.method_calls)
         self.assertIn(call.umount('-l', '/dev/sdf'), mock_sh.method_calls)
         stderr = sys.stderr.getvalue()
         self.assertIn(self.conf_file, stderr)
         self.assertIn("DEBUG Mounted device", stderr)
-        # self.assertIn("DEBUG Performed mysql dump", stderr)
         self.assertIn("DEBUG Unmounted device", stderr)
-        self.assertIn("DEBUG Elapsed time", stderr)
-        stdout = sys.stdout.getvalue()
-        self.assertIn('sysadmin-backup', stdout)
-        self.assertIn("Performing backup", stdout)
-        self.assertIn('Backup finished', stdout)
 
     class MockShMounted(Mock):
         # noinspection PyPep8Naming
@@ -46,4 +42,4 @@ class UsbBackupTestCase(unittest.TestCase):
         self.assertIn("DEBUG Unmounted device", stderr)
 
     def tearDown(self):
-        shutil.rmtree('/tmp/spufd2')
+        shutil.rmtree('/tmp/spufd2', ignore_errors=True)

@@ -1,4 +1,4 @@
-""" Unit tests """
+""" Test tar local """
 import unittest
 import sys
 import shutil
@@ -14,6 +14,11 @@ class BasicBackupTestCase(unittest.TestCase):
         stderr = sys.stderr.getvalue()
         self.assertIn(self.conf_file, stderr)
         self.assertNotIn("DEBUG Mounted device", stderr)
+        self.assertIn("DEBUG Elapsed time", stderr)
+        stdout = sys.stdout.getvalue()
+        self.assertIn('sysadmin-backup', stdout)
+        self.assertIn("Performing backup", stdout)
+        self.assertIn('Backup finished', stdout)
 
     def tearDown(self):
-        shutil.rmtree('/tmp/spufd2')
+        shutil.rmtree('/tmp/spufd2', ignore_errors=True)

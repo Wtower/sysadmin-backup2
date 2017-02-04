@@ -1,8 +1,7 @@
-""" Unit tests """
+""" Test tar usb encrypted """
 import unittest
 from unittest.mock import patch, call
 import sys
-import os
 import shutil
 from core.app import Backup
 
@@ -13,8 +12,6 @@ class UsbEncBackupTestCase(unittest.TestCase):
     @patch('core.mount.sh')
     def test_backup_external_encrypted(self, mock_sh):
         sys.argv = [sys.argv[0], '-vvvv', self.conf_file]
-        # Let this test create destination to increase branch coverage
-        os.makedirs('/tmp/spufd2')
         Backup()
         self.assertIn(
             call.cryptsetup('luksOpen', '-d', '/root/backup-external-key', '/dev/sdf', 'backup-external'),
@@ -28,4 +25,4 @@ class UsbEncBackupTestCase(unittest.TestCase):
         self.assertIn("DEBUG Closed encrypted device", stderr)
 
     def tearDown(self):
-        shutil.rmtree('/tmp/spufd2')
+        shutil.rmtree('/tmp/spufd2', ignore_errors=True)
