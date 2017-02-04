@@ -3,6 +3,8 @@ backup:
   type: tar
   incremental: True
   directories: .
+  mysqldump: True
+  postgresdump: True
 
 destination:
   destination: /tmp/spufd2
