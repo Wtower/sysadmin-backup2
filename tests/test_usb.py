@@ -11,7 +11,7 @@ class UsbBackupTestCase(unittest.TestCase):
     conf_file = 'tests/test_usb.conf.yml'
 
     @patch('core.mount.sh')
-    def test_backup_external(self, mock_sh):
+    def test_external(self, mock_sh):
         sys.argv = [sys.argv[0], '-vvvv', self.conf_file]
         # Let this test create destination to increase branch coverage
         os.makedirs('/tmp/spufd2')
@@ -34,7 +34,7 @@ class UsbBackupTestCase(unittest.TestCase):
     mock_sh_mounted = MockShMounted()
 
     @patch('core.mount.sh', new=mock_sh_mounted)
-    def test_backup_external_mounted(self):
+    def test_mounted(self):
         sys.argv = [sys.argv[0], '-vvvv', self.conf_file]
         Backup()
         stderr = sys.stderr.getvalue()

@@ -1,6 +1,6 @@
 """ Test tar usb encrypted """
 import unittest
-from unittest.mock import patch, call
+from unittest.mock import Mock, patch, call
 import sys
 import shutil
 from core.app import Backup
@@ -10,7 +10,7 @@ class UsbEncBackupTestCase(unittest.TestCase):
     conf_file = 'tests/test_usb_enc.conf.yml'
 
     @patch('core.mount.sh')
-    def test_backup_external_encrypted(self, mock_sh):
+    def test_external_encrypted(self, mock_sh):
         sys.argv = [sys.argv[0], '-vvvv', self.conf_file]
         Backup()
         self.assertIn(

@@ -8,7 +8,7 @@ from core.app import Backup
 class BasicBackupTestCase(unittest.TestCase):
     conf_file = 'tests/test_basic.conf.yml'
 
-    def test_backup_local(self):
+    def test_local(self):
         sys.argv = [sys.argv[0], '-vvvv', self.conf_file]
         Backup()
         stderr = sys.stderr.getvalue()
