@@ -3,6 +3,12 @@ sysadmin-backup
 
 Console backup application. Intended mainly for server administration.
 
+.. image:: https://img.shields.io/travis/Wtower/sysadmin-backup2/master.svg
+  :target: https://travis-ci.org/Wtower/sysadmin-backup2
+
+.. image:: https://img.shields.io/coveralls/Wtower/sysadmin-backup2/master.svg
+  :target: https://coveralls.io/github/Wtower/sysadmin-backup2
+
 Features
 --------
 
