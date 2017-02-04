@@ -1,12 +1,15 @@
 backup:
-  name: Sample configuration for local backup
+  name: Sample configuration for external backup with encryption
   type: tar
   incremental: True
   directories: .
 
 destination:
   destination: /tmp/spufd2
-  type: local
+  type: usb
+  device: /dev/sdf
+  encrypted_key: /root/backup-external-key
+  encrypted_map: backup-external
 
 logging:
   version: 1

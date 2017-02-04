@@ -38,6 +38,21 @@ class BackupTestCase(unittest.TestCase):
         self.assertIn('DEBUG Device already mounted', stderr)
         self.assertIn('DEBUG Unmounted device', stderr)
 
+    @patch('core.mount.sh')
+    def test_backup_external_encrypted(self, mock_sh):
+        sys.argv = [sys.argv[0], '-vvvv', 'conf/sample_external_enc.conf.yml']
+        Backup()
+        self.assertIn(
+            call.cryptsetup('luksOpen', '-d', '/root/backup-external-key', '/dev/sdf', 'backup-external'),
+            mock_sh.method_calls)
+        self.assertIn(call.mount('/dev/sdf', '/tmp/spufd2'), mock_sh.method_calls)
+        self.assertIn(call.umount('-l', '/dev/sdf'), mock_sh.method_calls)
+        self.assertIn(call.cryptsetup('luksClose', 'backup-external'), mock_sh.method_calls)
+        stderr = sys.stderr.getvalue()
+        self.assertIn('conf/sample_external_enc.conf.yml', stderr)
+        self.assertIn('DEBUG Opened encrypted device', stderr)
+        self.assertIn('DEBUG Closed encrypted device', stderr)
+
     def test_backup_local(self):
         sys.argv = [sys.argv[0], '-vvvv', 'conf/sample_local.conf.yml']
         Backup()

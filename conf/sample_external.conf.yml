@@ -8,8 +8,6 @@ destination:
   destination: /tmp/spufd2
   type: usb
   device: /dev/sdf
-  #encrypted_key:
-  #encrypted_map:
 
 logging:
   version: 1
