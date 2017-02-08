@@ -3,7 +3,7 @@ backup:
   type: tar
   frequency: daily
   directories:
-    - .
+    - conf
   mysqldump: True
   postgresdump: True
 
