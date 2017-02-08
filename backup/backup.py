@@ -4,6 +4,7 @@ import logging
 import os
 import sh
 from abc import ABCMeta, abstractmethod
+from datetime import datetime
 from core.mount import Mount
 
 
@@ -25,6 +26,7 @@ class BackupMethod:
         self.mount = Mount(configuration['destination'])
         # Default values
         self.conf_file_name = os.path.basename(self.arguments.conf_file.name).split('.')[0]
+        self.date_stamp = datetime.now().strftime(self.frequencies[self.configuration['backup']['frequency']])
         self.configuration['destination']['database'] = self.configuration['destination'].get(
             'database', self.configuration['destination']['destination'])
 
