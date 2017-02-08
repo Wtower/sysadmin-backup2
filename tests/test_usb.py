@@ -16,8 +16,7 @@ class UsbBackupTestCase(unittest.TestCase):
     def test_external(self, mock_sh):
         sys.argv = [sys.argv[0], '-vvvv', self.conf_file]
         # Let this test create destination to increase branch coverage
-        if not os.path.exists(self.destination):
-            os.makedirs(self.destination)
+        os.makedirs(self.destination, exist_ok=True)
         Backup()
         self.assertIn(call.mount(self.device, self.destination), mock_sh.method_calls)
         self.assertIn(call.umount('-l', self.device), mock_sh.method_calls)
