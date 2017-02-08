@@ -1,6 +1,7 @@
 backup:
   name: "Test configuration: tar local"
   type: tar
+  frequency: daily
   directories:
     - .
   mysqldump: True

@@ -11,15 +11,19 @@ backup:
 
   # Name
   # Backup job name
-  # Defaults to "sysadmin-backup"
-  #
   name: Sample
 
   # Backup Type
   # Possible values: tar, rsync
   # Specify the backup method
-  #
   type: tar
+
+  # Frequency
+  # Possible values: daily, weekly, monthly, yearly
+  # Specify the backup frequency
+  # If tar, the date is appended to the filename and it only runs once per period
+  # If rsync+incremental, the date is used in the backup folder name
+  #frequency: daily
 
   # Incremental
   # Possible values: boolean
@@ -27,13 +31,17 @@ backup:
   # If tar incremental then increment period is *month* (every month one full backup).
   # Then checks if snar is in this month or delete.
   # If rsync then it is backwards incremental.
-  #
   incremental: True
+
+  # Full backup frequency
+  # Possible values: daily, weekly, monthly, yearly
+  # Specify how often a full backup will be performed (tar incremental only)
+  # If ommited, it will never reperform a full backup
+  #full_backup_frequency: monthly
 
   # Ignore existing
   # Possible values: boolean
   # Ignores existing files on destination (rsync only).
-  #
   #ignore_existing:
 
 
@@ -62,7 +70,6 @@ backup:
 
   # Excludes
   # Which files or directories to exclude.
-  # Separate with comma.
   #
   excludes:
     - Thumbs.db

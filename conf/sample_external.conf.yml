@@ -1,6 +1,7 @@
 backup:
   name: Sample configuration for external backup
   type: tar
+  frequency: daily
   incremental: True
   directories:
     - /etc
