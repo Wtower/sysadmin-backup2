@@ -2,21 +2,25 @@
 import unittest
 from unittest.mock import Mock, patch, call
 import sys
+import os
 import shutil
 from core.app import Backup
 
 
 class BasicDBBackupTestCase(unittest.TestCase):
     conf_file = 'tests/test_basic_db.conf.yml'
+    destination = '/tmp/spufd2'
 
     @patch('backup.backup.sh')
     def test_db(self, mock_sh):
         sys.argv = [sys.argv[0], '-vvvv', self.conf_file]
         Backup()
         self.assertIn(
-            call.mysqldump('--defaults-extra-file=~/.my.cnf', '--all-databases', _out='/tmp/spufd2/mysqldump.sql'),
+            call.mysqldump(
+                '--defaults-extra-file=~/.my.cnf', '--all-databases',
+                _out=os.path.join(self.destination, 'mysqldump.sql')),
             mock_sh.method_calls)
-        self.assertIn(call.pg_dumpall(_out='/tmp/spufd2/postgresdump.sql'), mock_sh.method_calls)
+        self.assertIn(call.pg_dumpall(_out=os.path.join(self.destination, 'postgresdump.sql')), mock_sh.method_calls)
         stderr = sys.stderr.getvalue()
         self.assertIn(self.conf_file, stderr)
         self.assertIn("DEBUG Performed mysql dump", stderr)
@@ -52,4 +56,4 @@ class BasicDBBackupTestCase(unittest.TestCase):
         self.assertIn("ERROR Unable to perform postgresdump: %s" % self.mock_sh_dump.ErrorReturnCode.stderr, stderr)
 
     def tearDown(self):
-        shutil.rmtree('/tmp/spufd2', ignore_errors=True)
+        shutil.rmtree(self.destination, ignore_errors=True)

@@ -1,20 +1,15 @@
 backup:
-  name: Sample configuration for external backup
+  name: "Test configuration: tar local incremental with full period"
   type: tar
   frequency: daily
   incremental: True
   full_backup_frequency: monthly
   directories:
-    - /etc
-    - /var/log
-    - /media/files
+    - conf
 
 destination:
-  destination: /media/backup-external
-  type: usb
-  device: /dev/sdf
-  encrypted_key: /root/backup-external-key
-  encrypted_map: backup-external
+  destination: /tmp/spufd2
+  type: local
 
 logging:
   version: 1
@@ -22,8 +17,6 @@ logging:
   formatters:
     simple:
       format: '%(levelname)s %(message)s'
-    verbose:
-      format: '%(asctime)s %(process)d %(name)s %(levelname)s %(message)s'
   handlers:
     console:
       class: logging.StreamHandler

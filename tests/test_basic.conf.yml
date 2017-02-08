@@ -1,9 +1,9 @@
 backup:
   name: "Test configuration: tar local"
   type: tar
-  # incremental: True
+  frequency: daily
   directories:
-    - .
+    - conf
 
 destination:
   destination: /tmp/spufd2

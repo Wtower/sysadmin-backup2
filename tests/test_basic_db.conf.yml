@@ -1,8 +1,9 @@
 backup:
   name: "Test configuration: tar local"
   type: tar
+  frequency: daily
   directories:
-    - .
+    - conf
   mysqldump: True
   postgresdump: True
 

@@ -7,6 +7,7 @@ from core.app import Backup
 
 class BasicBackupTestCase(unittest.TestCase):
     conf_file = 'tests/test_basic.conf.yml'
+    destination = '/tmp/spufd2'
 
     def test_local(self):
         sys.argv = [sys.argv[0], '-vvvv', self.conf_file]
@@ -14,6 +15,7 @@ class BasicBackupTestCase(unittest.TestCase):
         stderr = sys.stderr.getvalue()
         self.assertIn(self.conf_file, stderr)
         self.assertNotIn("DEBUG Mounted device", stderr)
+        self.assertIn("DEBUG Not incremental backup", stderr)
         self.assertIn("DEBUG Elapsed time", stderr)
         stdout = sys.stdout.getvalue()
         self.assertIn('sysadmin-backup', stdout)
@@ -21,4 +23,4 @@ class BasicBackupTestCase(unittest.TestCase):
         self.assertIn('Backup finished', stdout)
 
     def tearDown(self):
-        shutil.rmtree('/tmp/spufd2', ignore_errors=True)
+        shutil.rmtree(self.destination, ignore_errors=True)

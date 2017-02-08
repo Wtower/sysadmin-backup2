@@ -1,8 +1,9 @@
 backup:
   name: "Test configuration: tar usb"
   type: tar
+  frequency: daily
   directories:
-    - .
+    - conf
 
 destination:
   destination: /tmp/spufd2
