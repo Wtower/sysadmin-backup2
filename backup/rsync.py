@@ -24,6 +24,7 @@ class RSync(BackupMethod):
                 logger.debug("Not incremental backup")
                 rsync_args = ['-as', '--no-links']
                 if self.configuration['backup'].get('ignore_existing', False):
+                    logger.debug("Ignoring existing files")
                     rsync_args.append('--delete')
 
             if self.arguments.verbosity:
