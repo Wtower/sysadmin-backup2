@@ -8,21 +8,24 @@ from core.app import Backup
 
 class UsbEncBackupTestCase(unittest.TestCase):
     conf_file = 'tests/test_usb_enc.conf.yml'
+    destination = '/tmp/spufd2'
+    device = '/dev/sdf'
+    encrypted_map = 'backup-external'
 
     @patch('core.mount.sh')
     def test_external_encrypted(self, mock_sh):
         sys.argv = [sys.argv[0], '-vvvv', self.conf_file]
         Backup()
         self.assertIn(
-            call.cryptsetup('luksOpen', '-d', '/root/backup-external-key', '/dev/sdf', 'backup-external'),
+            call.cryptsetup('luksOpen', '-d', '/root/backup-external-key', self.device, self.encrypted_map),
             mock_sh.method_calls)
-        self.assertIn(call.mount('/dev/sdf', '/tmp/spufd2'), mock_sh.method_calls)
-        self.assertIn(call.umount('-l', '/dev/sdf'), mock_sh.method_calls)
-        self.assertIn(call.cryptsetup('luksClose', 'backup-external'), mock_sh.method_calls)
+        self.assertIn(call.mount(self.device, self.destination), mock_sh.method_calls)
+        self.assertIn(call.umount('-l', self.device), mock_sh.method_calls)
+        self.assertIn(call.cryptsetup('luksClose', self.encrypted_map), mock_sh.method_calls)
         stderr = sys.stderr.getvalue()
         self.assertIn(self.conf_file, stderr)
         self.assertIn("DEBUG Opened encrypted device", stderr)
         self.assertIn("DEBUG Closed encrypted device", stderr)
 
     def tearDown(self):
-        shutil.rmtree('/tmp/spufd2', ignore_errors=True)
+        shutil.rmtree(self.destination, ignore_errors=True)

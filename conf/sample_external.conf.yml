@@ -3,6 +3,7 @@ backup:
   type: tar
   frequency: daily
   incremental: True
+  full_backup_frequency: monthly
   directories:
     - /etc
     - /var/log

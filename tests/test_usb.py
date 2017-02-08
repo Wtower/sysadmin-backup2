@@ -9,15 +9,18 @@ from core.app import Backup
 
 class UsbBackupTestCase(unittest.TestCase):
     conf_file = 'tests/test_usb.conf.yml'
+    destination = '/tmp/spufd2'
+    device = '/dev/sdf'
 
     @patch('core.mount.sh')
     def test_external(self, mock_sh):
         sys.argv = [sys.argv[0], '-vvvv', self.conf_file]
         # Let this test create destination to increase branch coverage
-        os.makedirs('/tmp/spufd2')
+        if not os.path.exists(self.destination):
+            os.makedirs(self.destination)
         Backup()
-        self.assertIn(call.mount('/dev/sdf', '/tmp/spufd2'), mock_sh.method_calls)
-        self.assertIn(call.umount('-l', '/dev/sdf'), mock_sh.method_calls)
+        self.assertIn(call.mount(self.device, self.destination), mock_sh.method_calls)
+        self.assertIn(call.umount('-l', self.device), mock_sh.method_calls)
         stderr = sys.stderr.getvalue()
         self.assertIn(self.conf_file, stderr)
         self.assertIn("DEBUG Mounted device", stderr)
@@ -42,4 +45,4 @@ class UsbBackupTestCase(unittest.TestCase):
         self.assertIn("DEBUG Unmounted device", stderr)
 
     def tearDown(self):
-        shutil.rmtree('/tmp/spufd2', ignore_errors=True)
+        shutil.rmtree(self.destination, ignore_errors=True)
