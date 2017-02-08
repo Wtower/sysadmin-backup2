@@ -26,7 +26,8 @@ class Tar(BackupMethod):
             logger.debug("Full backup frequency not defined")
             return True
         date_format = self.frequencies[self.configuration['backup']['full_backup_frequency']]
-        if os.path.getmtime(path_filename).strftime(date_format) == datetime.now().strftime(date_format):
+        snar_time = datetime.fromtimestamp(os.path.getmtime(path_filename)).strftime(date_format)
+        if snar_time == datetime.now().strftime(date_format):
             logger.debug("Snar file exists in current full backup period")
             return True
         os.remove(path_filename)
@@ -44,7 +45,7 @@ class Tar(BackupMethod):
 
             if os.path.exists('%s%s' % (path_filename, ext)) or os.path.exists('%s.inc%s' % (path_filename, ext)):
                 print("Backup already performed")
-                logger.debug("Backup file %s already exists", path_filename)
+                logger.debug("Backup file %s already exists", filename)
                 return
 
             print("Performing backup")
