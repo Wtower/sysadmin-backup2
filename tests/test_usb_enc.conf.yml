@@ -1,0 +1,29 @@
+backup:
+  name: "Test configuration: tar usb"
+  type: tar
+  frequency: daily
+  directories:
+    - conf
+
+destination:
+  destination: /tmp/spufd2
+  type: usb
+  device: /dev/sdf
+  encrypted_key: /root/backup-external-key
+  encrypted_map: backup-external
+
+logging:
+  version: 1
+  disable_existing_loggers: False
+  formatters:
+    simple:
+      format: '%(levelname)s %(message)s'
+  handlers:
+    console:
+      class: logging.StreamHandler
+      formatter: simple
+  loggers:
+    backup:
+      level: DEBUG
+      handlers:
+        - console

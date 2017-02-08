@@ -1,0 +1,29 @@
+backup:
+  name: Sample configuration for local backup
+  type: rsync
+  frequency: daily
+  incremental: True
+  directories:
+    - /media/files
+
+destination:
+  destination: /media/backup
+  type: local
+
+logging:
+  version: 1
+  disable_existing_loggers: False
+  formatters:
+    simple:
+      format: '%(levelname)s %(message)s'
+    verbose:
+      format: '%(asctime)s %(process)d %(name)s %(levelname)s %(message)s'
+  handlers:
+    console:
+      class: logging.StreamHandler
+      formatter: simple
+  loggers:
+    backup:
+      level: DEBUG
+      handlers:
+        - console

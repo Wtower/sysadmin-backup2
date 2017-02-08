@@ -1,0 +1,28 @@
+backup:
+  name: "Test configuration: rsync incremental"
+  type: rsync
+  frequency: daily
+  incremental: True
+  directories:
+    - conf
+
+destination:
+  destination: /tmp/spufd2
+  incremental_destination: /tmp/spufd2/incremental
+  type: local
+
+logging:
+  version: 1
+  disable_existing_loggers: False
+  formatters:
+    simple:
+      format: '%(levelname)s %(message)s'
+  handlers:
+    console:
+      class: logging.StreamHandler
+      formatter: simple
+  loggers:
+    backup:
+      level: DEBUG
+      handlers:
+        - console

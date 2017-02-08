@@ -1,1 +1,4 @@
 .idea/
+.coverage
+coverage.log
+htmlcov/

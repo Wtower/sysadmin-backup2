@@ -1,0 +1,35 @@
+backup:
+  name: Sample configuration for external backup
+  type: tar
+  frequency: daily
+  incremental: True
+  full_backup_frequency: monthly
+  directories:
+    - /etc
+    - /var/log
+    - /media/files
+
+destination:
+  destination: /media/backup-external
+  type: usb
+  device: /dev/sdf
+  encrypted_key: /root/backup-external-key
+  encrypted_map: backup-external
+
+logging:
+  version: 1
+  disable_existing_loggers: False
+  formatters:
+    simple:
+      format: '%(levelname)s %(message)s'
+    verbose:
+      format: '%(asctime)s %(process)d %(name)s %(levelname)s %(message)s'
+  handlers:
+    console:
+      class: logging.StreamHandler
+      formatter: simple
+  loggers:
+    backup:
+      level: DEBUG
+      handlers:
+        - console
