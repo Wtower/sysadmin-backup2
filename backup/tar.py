@@ -38,8 +38,7 @@ class Tar(BackupMethod):
     def execute(self):
         logger = logging.getLogger('backup.tar')
         with self.mount:
-            date_stamp = datetime.now().strftime(self.frequencies[self.configuration['backup']['frequency']])
-            filename = '%s.%s' % (self.conf_file_name, date_stamp)
+            filename = '%s.%s' % (self.conf_file_name, self.date_stamp)
             path_filename = os.path.join(self.configuration['destination']['destination'], filename)
             ext = '.tar.gz'
 
@@ -71,11 +70,13 @@ class Tar(BackupMethod):
 
             logger.debug(tar_args)
             if not self.arguments.dry_run:
-                # noinspection PyUnresolvedReferences
-                sh.tar(*tar_args)
-                logger.debug("Files added to tar archive")
-                os.rename(path_filename + partial + ext, path_filename + ext)
-
-        print("Backup finished")
-        logger.info("Backup successfully completed.")
-        logger.debug("Elapsed time: %.3f sec", self.stat())
+                try:
+                    # noinspection PyUnresolvedReferences
+                    sh.tar(*tar_args)
+                except sh.ErrorReturnCode as exc:
+                    logger.critical("Backup failure: %s", exc.stderr)
+                else:
+                    os.rename(path_filename + partial + ext, path_filename + ext)
+                    print("Backup finished")
+                    logger.info("Backup successfully completed.")
+                    logger.debug("Elapsed time: %.3f sec", self.stat())

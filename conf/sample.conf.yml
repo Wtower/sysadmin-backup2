@@ -41,7 +41,8 @@ backup:
 
   # Ignore existing
   # Possible values: boolean
-  # Ignores existing files on destination (rsync only).
+  # Ignores existing files on destination (rsync non-incremental only).
+  # Default: False
   #ignore_existing:
 
 
@@ -50,7 +51,6 @@ backup:
   # Run a mysqldump before the backup.
   # Make sure to have properly configured ~/.my.cnf
   # See destination-database
-  #
   #mysqldump: False
 
   # PostGreSQL Dump
@@ -58,19 +58,16 @@ backup:
   # Run a pgdump before the backup.
   # Make sure to have properly configured ~/.pgpass
   # See destination-database
-  #
   #postgresdump: False
 
   # Directories
   # Which directories to include.
-  # Separate with comma (tar only).
-  #
+  # Multiple directories allowed (tar only).
   directories:
     - /etc
 
   # Excludes
   # Which files or directories to exclude.
-  #
   excludes:
     - Thumbs.db
     - .BridgeCacheT
@@ -90,46 +87,40 @@ destination:
 
   # Destination
   # Where to place backup files.
-  #
   destination: /tmp
 
   # Destination Type
-  # Possible values: local, ssh, usb, (in future: ftp)
+  # Possible values: local, ssh, usb
   # Specify type of backup destination.
   # Useful for second media / cloud.
-  #
+  # ssh only valid for rsync
   type: local
 
   # Device
   # If usb, it is the device to be mounted (eg /dev/sdd1)
   # Not used for ssh. Blkid not yet supported.
   # Set device even if local backup to get report of free disk space.
-  #
   #device:
 
   # Encrypted key
   # If encrypted usb, set to pathfilename of keyfile.
   # Otherwise leave empty.
-  #
   #encrypted_key:
 
   # Encrypted mappoint
   # If encrypted usb, set to mappoint.
   # Otherwise leave empty.
   # Usually the same as leaf directory of target mountpoint.
-  #
   #encrypted_map:
 
   # Incremental Backup Directory
-  # Where to keep incremental backups (rsync only).
+  # Where to keep incremental backups (rsync only: backup-dir option).
   # Prefer absolute paths to avoid backup loops.
-  #
-  #backup_dir:
+  #incremental_destination:
 
   # Database destination
   # Specify where to output database dumps (if enabled)
   # If ommited then general destination will be used.
-  #
   #database:
 
   ## PURGE CONFIGURATION
@@ -145,7 +136,6 @@ destination:
   #  It will clean all but first file for 1, 4, 7, 10 of previous year
   #  It will clean all but first file for 1 of 2nd-previous year and back
   # 2. If still larger, then old backups are cleared in order.
-  #
   #quota:
 
 ### LOGGING CONFIGURATION
