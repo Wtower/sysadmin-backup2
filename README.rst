@@ -23,9 +23,25 @@ Features
 .. _logging: https://docs.python.org/3/library/logging.config.html#dictionary-schema-details
 .. _handlers: https://docs.python.org/3/library/logging.handlers.html#module-logging.handlers
 
+Installation
+------------
+
+Download and extract::
+
+  wget https://github.com/Wtower/sysadmin-backup2/archive/v2.0.0-alpha.tar.gz
+  tar xvzf v2.0.0-alpha.tar.gz
+  cd sysadmin-backup2-2.0.0-alpha
+
+Install python packages. You can use virtualenv (recommended) or system-wide (example on Ubuntu)::
+
+  sudo apt install python3-pip
+  sudo -H pip3 install -U pip setuptools
+  sudo -H pip3 install -U -r requirements.txt
+
 Usage
 -----
-::
+
+Make sure to use python3::
 
     (sysadmin-backup2) gkarak@neil ~/w/p/sysadmin-backup2 (dev)> ./sysadmin-backup.py -h
     usage: sysadmin-backup.py [-h] [-v] [--version] conf_file
@@ -45,8 +61,6 @@ For the configuration parameters see ``conf/sample.conf.yml``.
 
 Version note
 ------------
-
-Currently under initial development.
 
 This is the Version 2 in Python 3. For Version 1.20 in C++ see `sysadmin-backup v1`_.
 
