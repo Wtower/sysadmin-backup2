@@ -8,7 +8,7 @@ backup:
 destination:
   destination: /tmp/spufd2
   type: usb
-  device: /dev/sdf
+  device: /dev/sdz
 
 logging:
   version: 1

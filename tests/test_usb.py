@@ -10,7 +10,7 @@ from core.app import Backup
 class UsbBackupTestCase(unittest.TestCase):
     conf_file = 'tests/test_usb.conf.yml'
     destination = '/tmp/spufd2'
-    device = '/dev/sdf'
+    device = '/dev/sdz'
 
     @patch('core.mount.sh')
     def test_external(self, mock_sh):
