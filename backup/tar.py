@@ -51,9 +51,10 @@ class Tar(BackupMethod):
             logger.debug("Initiating backup")
             super(Tar, self).execute()
 
-            tar_args = ['cpzf']
+            tar_args = ['cpz']
             if self.arguments.verbosity:
                 tar_args[0] += 'v'
+            tar_args[0] += 'f'
 
             partial = datetime.now().strftime('.partial-%H-%M-%S')
             snar_filename = '%s.snar' % self.conf_file_name

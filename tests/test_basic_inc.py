@@ -20,7 +20,7 @@ class BasicIncBackupTestCase(unittest.TestCase):
         self.assertNotIn("DEBUG Mounted device", stderr)
         self.assertNotIn("DEBUG Not incremental backup", stderr)
         self.assertIn("DEBUG Snar file not exists", stderr)
-        self.assertIn('cpzfv', stderr)
+        self.assertIn('cpzvf', stderr)
         self.assertIn("DEBUG Elapsed time", stderr)
         stdout = sys.stdout.getvalue()
         self.assertIn('sysadmin-backup', stdout)
