@@ -44,7 +44,7 @@ class Mount:
 
     def unmount(self):
         if self.is_mounted:
-            sh.umount('-l', self.configuration['device'])
+            sh.umount('-l', self.configuration['destination'])
             self.logger.debug("Unmounted device")
             self.is_mounted = False
 

@@ -20,7 +20,7 @@ class UsbEncBackupTestCase(unittest.TestCase):
             call.cryptsetup('luksOpen', '-d', '/root/backup-external-key', self.device, self.encrypted_map),
             mock_sh.method_calls)
         self.assertIn(call.mount(self.device, self.destination), mock_sh.method_calls)
-        self.assertIn(call.umount('-l', self.device), mock_sh.method_calls)
+        self.assertIn(call.umount('-l', self.destination), mock_sh.method_calls)
         self.assertIn(call.cryptsetup('luksClose', self.encrypted_map), mock_sh.method_calls)
         stderr = sys.stderr.getvalue()
         self.assertIn(self.conf_file, stderr)
