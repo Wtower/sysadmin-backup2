@@ -57,9 +57,12 @@ class Mount:
                 self.configuration['encrypted_map'])
             self.logger.debug("Opened encrypted device")
             self.crypt_is_open = True
+            self.configuration['crypt_device'] = self.configuration['device']
+            self.configuration['device'] = os.path.join('/dev', 'mapper', self.configuration['encrypted_map'])
 
     def crypt_close(self):
         if self.crypt_is_open:
             sh.cryptsetup('luksClose', self.configuration['encrypted_map'])
             self.logger.debug("Closed encrypted device")
             self.crypt_is_open = False
+            self.configuration['device'] = self.configuration['crypt_device']
