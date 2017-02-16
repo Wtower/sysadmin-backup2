@@ -159,7 +159,7 @@ logging:
     logfile:
       level: DEBUG
       class: logging.NullHandler
-      # class: logging.TimedRotatingFileHandler
+      # class: logging.handlers.TimedRotatingFileHandler
       # filename: /var/log/backup.log
       # when: D
       # backupCount: 100
@@ -169,7 +169,7 @@ logging:
     email:
       level: INFO
       class: logging.NullHandler
-      # class: logging.SMTPHandler
+      # class: logging.handlers.SMTPHandler
       # mailhost: mail.example.com
       # fromaddr: no-reply@example.com
       # toaddrs:
