@@ -28,9 +28,9 @@ Installation
 
 Download and extract::
 
-  wget https://github.com/Wtower/sysadmin-backup2/archive/v2.0.0-alpha.tar.gz
-  tar xvzf v2.0.0-alpha.tar.gz
-  cd sysadmin-backup2-2.0.0-alpha
+  wget https://github.com/Wtower/sysadmin-backup2/archive/v2.0.0-beta.tar.gz
+  tar xvzf v2.0.0-beta.tar.gz
+  cd sysadmin-backup2-2.0.0-beta
 
 Install python packages. You can use virtualenv (recommended) or system-wide (example on Ubuntu)::
 
@@ -58,6 +58,14 @@ Make sure to use python3::
 
 
 For the configuration parameters see ``conf/sample.conf.yml``.
+
+Cron entries sample::
+
+    PATH='/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+
+    # m h  dom mon dow   command
+    0 5 * * * /root/sysadmin-backup2-2.0.0-beta/sysadmin-backup.py /etc/sysadmin-backup2/internal.conf.yml > /dev/null
+    5 10-14/1 * * 1-5 /root/sysadmin-backup2-2.0.0-beta/sysadmin-backup.py /etc/sysadmin-backup2/external.conf.yml > /dev/null
 
 Version note
 ------------
