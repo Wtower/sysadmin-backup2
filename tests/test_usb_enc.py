@@ -27,5 +27,23 @@ class UsbEncBackupTestCase(unittest.TestCase):
         self.assertIn("DEBUG Opened encrypted device", stderr)
         self.assertIn("DEBUG Closed encrypted device", stderr)
 
+    class MockShDevUnavailable(Mock):
+        # noinspection PyPep8Naming
+        class ErrorReturnCode_4(BaseException):
+            pass
+
+        def cryptsetup(self, *args):
+            raise self.ErrorReturnCode_4
+
+    mock_sh_dev_unavailable = MockShDevUnavailable()
+
+    @patch('core.mount.sh', new=mock_sh_dev_unavailable)
+    def test_dev_unavailable(self):
+        sys.argv = [sys.argv[0], '-vvvv', self.conf_file]
+        with self.assertRaises(SystemExit):
+            Backup()
+        stderr = sys.stderr.getvalue()
+        self.assertIn("DEBUG Device unavailable", stderr)
+
     def tearDown(self):
         shutil.rmtree(self.destination, ignore_errors=True)

@@ -50,11 +50,15 @@ class Mount:
 
     def crypt_open(self):
         if self.configuration.get('encrypted_key', None):
-            sh.cryptsetup(
-                'luksOpen',
-                '-d', self.configuration['encrypted_key'],
-                self.configuration['device'],
-                self.configuration['encrypted_map'])
+            try:
+                sh.cryptsetup(
+                    'luksOpen',
+                    '-d', self.configuration['encrypted_key'],
+                    self.configuration['device'],
+                    self.configuration['encrypted_map'])
+            except sh.ErrorReturnCode_4:
+                self.logger.debug("Device unavailable")
+                quit()
             self.logger.debug("Opened encrypted device")
             self.crypt_is_open = True
             self.configuration['crypt_device'] = self.configuration['device']
